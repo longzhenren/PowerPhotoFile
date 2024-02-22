@@ -159,13 +159,8 @@ def main():
         sys.exit(1)
 
     root_directory = sys.argv[1]
-    # root_directory = "/Volumes/SSD4T/套图搜集/爆机少女喵小吉"
     for current_directory, _, _ in os.walk(root_directory):
         process_directory(current_directory)
 
 if __name__ == "__main__":
     main()
-
-# if __name__ == "__main__":
-#     root_directory = "/Volumes/SSD4T/套图搜集/桜井宁宁"
-#     main(root_directory)
