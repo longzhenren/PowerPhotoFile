@@ -1,6 +1,29 @@
 import os
 import shutil
 
+def rename_files_with_continuous_numbers(folder_path):
+    # 获取目录下所有文件
+    files = os.listdir(folder_path)
+    
+    # 排序文件列表
+    files.sort()
+    
+    # 获取文件数量的位数，用于确定编号的格式
+    num_digits = len(str(len(files)))
+    
+    # 重命名文件
+    for index, file_name in enumerate(files):
+        # 构造新文件名
+        new_name = "LZR" + f"{index + 1:0{num_digits}d}_{file_name}"
+        
+        # 构造文件的完整路径
+        old_path = os.path.join(folder_path, file_name)
+        new_path = os.path.join(folder_path, new_name)
+        
+        # 重命名文件
+        os.rename(old_path, new_path)
+        print(f"重命名文件: {file_name} -> {new_name}")
+
 def copy_arw_files(source_folder, destination_folder, interval=6):
     # 创建目标文件夹
     if not os.path.exists(destination_folder):
@@ -27,4 +50,6 @@ if __name__ == "__main__":
 
     # 执行复制操作
     copy_arw_files(source_folder, destination_folder, interval)
+
+    rename_files_with_continuous_numbers(source_folder)
 
