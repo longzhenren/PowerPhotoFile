@@ -3,8 +3,10 @@ import re
 import shutil
 
 def replace_group_name(directory_path, new_group_name):
+    # 获取目录中的文件
     files = [f for f in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, f))]
-    pattern = re.compile(r'<crs:Group>\s*<rdf:Alt>\s*<rdf:li xml:lang="x-default"/>\s*</rdf:Alt>\s*</crs:Group>', re.DOTALL)
+    # 修改正则表达式，匹配 <crs:Group> 中的内容
+    pattern = re.compile(r'<crs:Group>\s*<rdf:Alt>\s*<rdf:li xml:lang="x-default">.*?</rdf:li>\s*</rdf:Alt>\s*</crs:Group>', re.DOTALL)
 
     for file_name in files:
         file_path = os.path.join(directory_path, file_name)
@@ -19,8 +21,8 @@ def replace_group_name(directory_path, new_group_name):
             with open(file_path, 'r', encoding='ISO-8859-1') as file:
                 content = file.read()
 
-        # 进行替换操作
-        modified_content = re.sub(pattern, f'<crs:Group>\n  <rdf:Alt>\n   <rdf:li xml:lang="x-default">{new_group_name}</rdf:li>\n  </rdf:Alt>\n   </crs:Group>', content)
+        # 进行替换操作，确保组名被正确替换
+        modified_content = re.sub(pattern, f'<crs:Group>\n  <rdf:Alt>\n   <rdf:li xml:lang="x-default">{new_group_name}</rdf:li>\n  </rdf:Alt>\n</crs:Group>', content)
 
         # 写入修改后的内容到文件
         with open(file_path, 'w', encoding='utf-8') as file:
