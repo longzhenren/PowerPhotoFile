@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PowerPhotoFile</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-card">
+          <h1>PowerPhotoFile</h1>
+          <p>Photographer utility suite for macOS and Windows.</p>
+          <div class="global-controls">
+            <button id="languageToggleBtn" class="toolbar-btn" type="button">中文</button>
+            <button id="themeToggleBtn" class="toolbar-btn" type="button">Dark</button>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Feature navigation">
+          <div class="nav-group-title" data-nav-group="core">Core Tools</div>
+          <button class="nav-item active" data-page="copy-xmp">Copy XMP Files</button>
+          <button class="nav-item" data-page="extract-group">Extract XMP Group Names</button>
+          <button class="nav-item" data-page="replace-group">Replace XMP Group Name</button>
+          <button class="nav-item" data-page="remove-filename-text">Remove Text In File Names</button>
+          <button class="nav-item" data-page="replace-file-text">Batch Replace Text In Files</button>
+          <button class="nav-item" data-page="copy-matched-source">Copy Matched Source Files</button>
+          <button class="nav-item" data-page="grid-merge">Grid Merge Collage</button>
+          <button class="nav-item" data-page="move-by-time">Move Images By Create Time</button>
+          <button class="nav-item" data-page="copy-arw">Copy ARW With Interval</button>
+          <button class="nav-item" data-page="rename-seq">Rename Files Sequentially</button>
+
+          <div class="nav-group-title" data-nav-group="wechat">WeChat Moments</div>
+          <button class="nav-item" data-page="wechat-compress">Short Edge 1080 Compression</button>
+
+          <div class="nav-group-title" data-nav-group="camera">Camera Time</div>
+          <button class="nav-item" data-page="camera-offset-scan">Scan Camera Model And Serial</button>
+          <button class="nav-item" data-page="camera-offset-apply">Apply Camera Time Offsets</button>
+
+          <div class="nav-group-title" data-nav-group="stats">Photo Stats</div>
+          <button class="nav-item" data-page="photo-stats">Aperture And Focal Distribution</button>
+
+          <div class="nav-group-title" data-nav-group="help">Help</div>
+          <button class="nav-item" data-page="feature-docs">Feature Guide & Adobe Docs</button>
+        </nav>
+
+        <div class="copyright-note" id="copyrightNote">
+          Copyright Amur（github.com/longzhenren amurzzb@gmail.com）
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="page active" data-page="copy-xmp">
+          <h3>Copy XMP Files</h3>
+          <p>Recursively copy all <code>.xmp</code> files from source directory to destination directory.</p>
+          <div class="field">
+            <label for="copyXmpSourceDir">Source Directory</label>
+            <div class="path-input">
+              <input id="copyXmpSourceDir" type="text" placeholder="/path/to/source" />
+              <button type="button" class="browse-btn" data-target="copyXmpSourceDir">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="copyXmpDestinationDir">Destination Directory</label>
+            <div class="path-input">
+              <input id="copyXmpDestinationDir" type="text" placeholder="/path/to/destination" />
+              <button type="button" class="browse-btn" data-target="copyXmpDestinationDir">Browse</button>
+            </div>
+          </div>
+          <button class="run-btn" data-action="copyXmpFiles">Run</button>
+          <pre class="result" id="result-copyXmpFiles">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="extract-group">
+          <h3>Extract XMP Group Names</h3>
+          <p>Recursively scan XMP files and return unique <code>&lt;crs:Group&gt;</code> names.</p>
+          <div class="field">
+            <label for="extractGroupDirectoryPath">Directory Path</label>
+            <div class="path-input">
+              <input id="extractGroupDirectoryPath" type="text" placeholder="/path/to/xmp/folder" />
+              <button type="button" class="browse-btn" data-target="extractGroupDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <button class="run-btn" data-action="extractXmpGroupNames">Run</button>
+          <pre class="result" id="result-extractXmpGroupNames">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="replace-group">
+          <h3>Replace XMP Group Name</h3>
+          <p>Recursively rewrite group block in XMP files with a new group name.</p>
+          <div class="field">
+            <label for="replaceGroupDirectoryPath">Directory Path</label>
+            <div class="path-input">
+              <input id="replaceGroupDirectoryPath" type="text" placeholder="/path/to/xmp/folder" />
+              <button type="button" class="browse-btn" data-target="replaceGroupDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="replaceGroupNewGroupName">New Group Name</label>
+            <input id="replaceGroupNewGroupName" type="text" placeholder="My Preset Group" />
+          </div>
+          <button class="run-btn" data-action="replaceXmpGroupName">Run</button>
+          <pre class="result" id="result-replaceXmpGroupName">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="remove-filename-text">
+          <h3>Remove Text In File Names</h3>
+          <p>Recursively remove specified text from all file names under the directory.</p>
+          <div class="field">
+            <label for="removeTextDirectoryPath">Directory Path</label>
+            <div class="path-input">
+              <input id="removeTextDirectoryPath" type="text" placeholder="/path/to/folder" />
+              <button type="button" class="browse-btn" data-target="removeTextDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="removeTextValue">Text To Remove</label>
+            <input id="removeTextValue" type="text" placeholder="[brand]" />
+          </div>
+          <button class="run-btn" data-action="removeTextFromFilenames">Run</button>
+          <pre class="result" id="result-removeTextFromFilenames">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="replace-file-text">
+          <h3>Batch Replace Text In Files</h3>
+          <p>Recursively replace one or many text values inside files (one old value per line).</p>
+          <div class="field">
+            <label for="replaceTextDirectoryPath">Directory Path</label>
+            <div class="path-input">
+              <input id="replaceTextDirectoryPath" type="text" placeholder="/path/to/folder" />
+              <button type="button" class="browse-btn" data-target="replaceTextDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="replaceTextOldTexts">Old Texts (line-separated)</label>
+            <textarea id="replaceTextOldTexts" rows="4" placeholder="old value 1&#10;old value 2"></textarea>
+          </div>
+          <div class="field">
+            <label for="replaceTextNewText">New Text</label>
+            <input id="replaceTextNewText" type="text" placeholder="replacement" />
+          </div>
+          <button class="run-btn" data-action="batchReplaceTextInFiles">Run</button>
+          <pre class="result" id="result-batchReplaceTextInFiles">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="copy-matched-source">
+          <h3>Copy Matched Source Files</h3>
+          <p>Copy files from source folder when base names match files in edited folder.</p>
+          <div class="field">
+            <label for="copyMatchedEditedDirectory">Edited Directory</label>
+            <div class="path-input">
+              <input id="copyMatchedEditedDirectory" type="text" placeholder="/path/to/edited" />
+              <button type="button" class="browse-btn" data-target="copyMatchedEditedDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="copyMatchedSourceDirectory">Source Directory</label>
+            <div class="path-input">
+              <input id="copyMatchedSourceDirectory" type="text" placeholder="/path/to/source" />
+              <button type="button" class="browse-btn" data-target="copyMatchedSourceDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="copyMatchedDestinationDirectory">Destination Directory</label>
+            <div class="path-input">
+              <input id="copyMatchedDestinationDirectory" type="text" placeholder="/path/to/destination" />
+              <button type="button" class="browse-btn" data-target="copyMatchedDestinationDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="copyMatchedSourceExtensions">Source Extensions (comma-separated)</label>
+            <input id="copyMatchedSourceExtensions" type="text" value=".jpg" />
+          </div>
+          <button class="run-btn" data-action="copyMatchedSourceFiles">Run</button>
+          <pre class="result" id="result-copyMatchedSourceFiles">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="grid-merge">
+          <h3>Grid Merge Collage</h3>
+          <p>Recursively process each directory and generate 3x3 / 2x2 / 1xM collages by aspect buckets.</p>
+          <div class="field">
+            <label for="gridMergeRootDirectory">Root Directory</label>
+            <div class="path-input">
+              <input id="gridMergeRootDirectory" type="text" placeholder="/path/to/root" />
+              <button type="button" class="browse-btn" data-target="gridMergeRootDirectory">Browse</button>
+            </div>
+          </div>
+          <button class="run-btn" data-action="gridMergeByAspect">Run</button>
+          <pre class="result" id="result-gridMergeByAspect">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="move-by-time">
+          <h3>Move Images By Create Time</h3>
+          <p>Recursively move image files with create time later than the specified timestamp.</p>
+          <div class="field">
+            <label for="moveByTimeSourceDirectory">Source Directory</label>
+            <div class="path-input">
+              <input id="moveByTimeSourceDirectory" type="text" placeholder="/path/to/source" />
+              <button type="button" class="browse-btn" data-target="moveByTimeSourceDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="moveByTimeDestinationDirectory">Destination Directory</label>
+            <div class="path-input">
+              <input id="moveByTimeDestinationDirectory" type="text" placeholder="/path/to/destination" />
+              <button type="button" class="browse-btn" data-target="moveByTimeDestinationDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="moveByTimeSpecifiedTime">Specified Time (YYYY-MM-DD HH:mm:ss)</label>
+            <input id="moveByTimeSpecifiedTime" type="text" placeholder="2024-02-21 13:20:00" />
+          </div>
+          <button class="run-btn" data-action="moveImagesByCreateTime">Run</button>
+          <pre class="result" id="result-moveImagesByCreateTime">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="copy-arw">
+          <h3>Copy ARW With Interval</h3>
+          <p>Copy one ARW file every N files from source folder to destination folder.</p>
+          <div class="field">
+            <label for="copyArwSourceFolder">Source Folder</label>
+            <div class="path-input">
+              <input id="copyArwSourceFolder" type="text" placeholder="/path/to/source" />
+              <button type="button" class="browse-btn" data-target="copyArwSourceFolder">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="copyArwDestinationFolder">Destination Folder</label>
+            <div class="path-input">
+              <input id="copyArwDestinationFolder" type="text" placeholder="/path/to/destination" />
+              <button type="button" class="browse-btn" data-target="copyArwDestinationFolder">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="copyArwInterval">Interval</label>
+            <input id="copyArwInterval" type="number" min="1" value="4" />
+          </div>
+          <button class="run-btn" data-action="copyArwWithInterval">Run</button>
+          <pre class="result" id="result-copyArwWithInterval">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="rename-seq">
+          <h3>Rename Files Sequentially</h3>
+          <p>Rename all top-level files to continuous numbers while preserving original file names after underscore.</p>
+          <div class="field">
+            <label for="renameSeqFolderPath">Folder Path</label>
+            <div class="path-input">
+              <input id="renameSeqFolderPath" type="text" placeholder="/path/to/folder" />
+              <button type="button" class="browse-btn" data-target="renameSeqFolderPath">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="renameSeqPrefix">Prefix</label>
+            <input id="renameSeqPrefix" type="text" value="LZR" />
+          </div>
+          <button class="run-btn" data-action="renameFilesWithContinuousNumbers">Run</button>
+          <pre class="result" id="result-renameFilesWithContinuousNumbers">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="wechat-compress">
+          <h3>WeChat Moments: Short Edge 1080 Compression</h3>
+          <p>Compress image files so the short edge is 1080 pixels while preserving aspect ratio.</p>
+          <div class="field">
+            <label for="wechatCompressSourceDirectory">Source Directory</label>
+            <div class="path-input">
+              <input id="wechatCompressSourceDirectory" type="text" placeholder="/path/to/source" />
+              <button type="button" class="browse-btn" data-target="wechatCompressSourceDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="wechatCompressDestinationDirectory">Destination Directory</label>
+            <div class="path-input">
+              <input id="wechatCompressDestinationDirectory" type="text" placeholder="/path/to/destination" />
+              <button type="button" class="browse-btn" data-target="wechatCompressDestinationDirectory">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="wechatCompressQuality">JPEG/WebP Quality (40-100)</label>
+            <input id="wechatCompressQuality" type="number" min="40" max="100" value="88" />
+          </div>
+          <button class="run-btn" data-action="wechatCompressShortEdge1080">Run</button>
+          <pre class="result" id="result-wechatCompressShortEdge1080">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="camera-offset-scan">
+          <h3>Scan Camera Model And Serial</h3>
+          <p>Scan directory and detect camera model/serial combinations from JPG and RAW metadata.</p>
+          <div class="field">
+            <label for="cameraScanDirectoryPath">Directory Path</label>
+            <div class="path-input">
+              <input id="cameraScanDirectoryPath" type="text" placeholder="/path/to/photos" />
+              <button type="button" class="browse-btn" data-target="cameraScanDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <button class="run-btn" data-action="scanCameraDevices">Run</button>
+          <pre class="result" id="result-scanCameraDevices">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="camera-offset-apply">
+          <h3>Apply Camera Time Offsets</h3>
+          <p>Set offset rules by camera key and update file modification time (and creation time when platform supports it).</p>
+          <div class="field">
+            <label for="cameraApplyDirectoryPath">Directory Path</label>
+            <div class="path-input">
+              <input id="cameraApplyDirectoryPath" type="text" placeholder="/path/to/photos" />
+              <button type="button" class="browse-btn" data-target="cameraApplyDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cameraOffsetsJson">Offset Rules (JSON)</label>
+            <textarea id="cameraOffsetsJson" rows="6" placeholder='[{\"cameraKey\":\"SONY ILCE-7M4::1234567\",\"offsetMinutes\":-3}]'></textarea>
+          </div>
+          <button class="run-btn" data-action="applyCameraTimeOffsets">Run</button>
+          <pre class="result" id="result-applyCameraTimeOffsets">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="photo-stats">
+          <h3>Aperture And Focal Distribution</h3>
+          <p>Scan RAW/JPG files, calculate common aperture and focal-length usage, and save SVG charts.</p>
+          <div class="field">
+            <label for="photoStatsDirectoryPath">Photo Directory</label>
+            <div class="path-input">
+              <input id="photoStatsDirectoryPath" type="text" placeholder="/path/to/photos" />
+              <button type="button" class="browse-btn" data-target="photoStatsDirectoryPath">Browse</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="photoStatsOutputDirectory">Output Directory</label>
+            <div class="path-input">
+              <input id="photoStatsOutputDirectory" type="text" placeholder="/path/to/output" />
+              <button type="button" class="browse-btn" data-target="photoStatsOutputDirectory">Browse</button>
+            </div>
+          </div>
+          <button class="run-btn" data-action="analyzeApertureFocalDistribution">Run</button>
+          <pre class="result" id="result-analyzeApertureFocalDistribution">Ready.</pre>
+        </section>
+
+        <section class="page" data-page="feature-docs">
+          <h3>Feature Guide & Adobe Docs</h3>
+          <p>Search capability explanations and jump to Adobe official references for related workflow concepts.</p>
+          <div class="field">
+            <label for="docsSearchInput">Search Keywords</label>
+            <input id="docsSearchInput" type="text" placeholder="xmp / preset / capture time / focal length" />
+          </div>
+          <div class="docs-list" id="docsList"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
